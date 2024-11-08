@@ -1,0 +1,6 @@
+1. Find dataset ✅
+2. Make language specific ✅
+3. Calculate create table of vectors (x,y) across all z prompts. (x = layer, y = language)
+4. Calculate variance for layer x across all y vectors
+5. Read other papers on the topic
+
