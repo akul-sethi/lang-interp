@@ -22,12 +22,14 @@ def ma_across_prompt_type(lang):
     PROMPTS = len(ds)
 
     # [prompt, layer, lang, dims]
-    layers = torch.tensor([LAYERS, DIMS])
+    layers = torch.zeros([LAYERS, DIMS])
     states = [[None for _ in range(LAYERS)] for _ in range(PROMPTS)]
     for prompt in range(PROMPTS):
         with llm.trace(ds[prompt]["prompt"], remote=True) as tracer:
             for layer in range(LAYERS):
-                states[prompt][layer] = llm.model.layers[layer].output.save()
+                states[prompt][layer] = (
+                    llm.model.layers[layer].output[0][0, -1, :].save()
+                )
 
     for prompt in range(PROMPTS):
         for layer in range(LAYERS):
